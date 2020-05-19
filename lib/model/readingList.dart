@@ -339,8 +339,6 @@ class Movie {
 
   ];
 
-
-
   String title;
   String year;
   String rated;

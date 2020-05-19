@@ -33,7 +33,7 @@ class ReadingListView extends StatelessWidget{
                   readingCard(readingList[index], context),
                   Positioned(
                     top: 10,
-                      child: readingImage(readingList[index].images[0])),
+                      child: readingImage(readingList[index].images[1])),
                 ],);
                 /*child: Card(
                   borderOnForeground: false,
@@ -137,6 +137,8 @@ class ReadingListView extends StatelessWidget{
                           fontSize: 17.0,
                         ),),
                       ),
+                      Text("Duration: ${reading.runtime}",
+                      style: mainTextStyle(),),
                     ],
                   ),
                   Row(
@@ -202,7 +204,8 @@ class ReadingListViewDetails extends StatelessWidget{
       ),
       body: ListView(
         children: <Widget>[
-          readingListThumbnail(thumbnail: reading.images[0])
+          readingListThumbnail(thumbnail: reading.images[0]),
+          MovieHeaderWithPoster(movie: reading)
         ],
       ),
 //      body: Center(
@@ -259,3 +262,49 @@ class readingListThumbnail extends StatelessWidget{
     );
   }
 }
+
+class MovieHeaderWithPoster extends StatelessWidget{
+  final Movie movie;
+
+  const MovieHeaderWithPoster({Key key, this.movie}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: <Widget>[
+          MoviePoster(poster: movie.images[0].toString())
+        ],
+      )
+    );
+  }
+}
+
+class MoviePoster extends StatelessWidget{
+  final String poster;
+
+  const MoviePoster({Key key, this.poster}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    var borderRadius = BorderRadius.all(Radius.circular(10));
+    return Card(
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: Container(
+          width: MediaQuery.of(context).size.width/4,
+          height: 160,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: NetworkImage(poster),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      )
+    );
+  }
+}
+
